@@ -18,7 +18,7 @@ private:
 	float CalculatePricePerNight();
 
 public:
-	Room(const int& numberOfBeds, const bool& isVIP);
+	Room(int numberOfBeds, bool isVIP);
 
 	int GetRoomNumber() const;
 	float GetPricePerNight() const;
@@ -27,9 +27,11 @@ public:
 	bool GetIsClean() const;
 	bool GetIsAvailable() const;
 
-	void SetIsClean(const bool& isClean);
-	void SetIsAvailble(const bool& isAvailable);
-	void SetRoomNumber(const int& roomNumber);
+	void SetIsClean(bool isClean);
+	void SetIsAvailble(bool isAvailable);
+	void SetRoomNumber(int roomNumber);
+
+	static void ResetRoomNumberBuffer();
 
 	~Room();
 };

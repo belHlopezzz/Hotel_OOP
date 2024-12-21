@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Employee.h"
 #include "Room.h"
 class Cleaner : public Employee

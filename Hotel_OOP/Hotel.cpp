@@ -1,10 +1,10 @@
 ﻿#include "Hotel.h"
 
-Hotel::Hotel(const int& numberOfStars, const std::string& name, const std::vector<Room>& rooms,
+Hotel::Hotel(int numberOfStars, const std::string& name, const std::vector<Room>& rooms,
     const std::vector<Employee>& employees)
-	:m_name(name), m_numberOfStars(numberOfStars)
+	:m_name(name), m_numberOfStars(numberOfStars), m_restaurant(nullptr)
 {
-	m_rooms.reserve(40);
+    m_rooms.reserve(40);
     m_employees.reserve(10);
 
 	m_rooms = rooms;
@@ -16,68 +16,61 @@ std::string Hotel::GetName() const
     return m_name;
 }
 
-
-void Hotel::AddRoom(const Room& room)
+std::vector<Room> Hotel::GetRooms() const
 {
-    m_rooms.emplace_back(room);
+    return m_rooms;
 }
 
-void Hotel::AddRoom()
+std::vector<Employee> Hotel::GetEmployees() const
 {
-    std::vector<Room>& rooms = RoomRepository::GetRooms();
-    rooms.emplace_back(3, false);
-    if (rooms.empty())
-    {
-        std::cout << "No rooms available.\n\n";
-    }
-    else
-    {
-        for (const auto& room : rooms)
-        {
-            std::cout << "Room Number:     #" << room.GetRoomNumber() << "\n"
-                << "VIP Status:      " << (room.GetIsVIP() ? "VIP" : "NOT VIP") << "\n"
-                << "Clean Status:    " << (room.GetIsClean() ? "Clean" : "Needs Cleaning") << "\n"
-                << "Number of Beds:  " << room.GetNumberOfBeds() << "\n"
-                << "Price per Night: $" << room.GetPricePerNight() << "\n"
-                << "Available:       " << (room.GetIsAvailable() ? "Available" : "NOT Available") << "\n"
-                << "-----------------------------------------------\n\n";
-        }
-    }
+    return m_employees;
 }
 
-void Hotel::AddEmployee(const Employee& employee)
+void Hotel::SetRestaurant(Restaurant* restaurant)
+{
+    m_restaurant = restaurant;
+}
+
+
+void Hotel::AddRoom(int bedNumber, bool isVIP)
+{
+    m_rooms.emplace_back(bedNumber, isVIP);
+}
+
+void Hotel::AddEmployee(Employee& employee)
 {
     m_employees.emplace_back(employee);
 }
 
-void Hotel::DeleteEmployee(const int& ID)
+void Hotel::DeleteEmployee(int ID)
 {
-    if (m_employees.empty())
-        throw std::runtime_error("Warning: There are no employees yet\n\n");
-
-    std::vector<Employee>::iterator it = m_employees.begin();
+    if (m_employees.empty()){
+        std::cout << "Warning: There are no employees yet\n\n";
+        return;
+    }
+    auto it = m_employees.begin();
     bool employeeFound = false;
-    while (it != m_employees.end())
-    {
-        if (it->GetID() == ID)
-        {
+    while (it != m_employees.end()) {
+        if (it->GetID() == ID) {
             it = m_employees.erase(it);
             employeeFound = true;
             break;
         }
-        it++;
+        else  {
+            ++it;
+        }
     }
-    if (!employeeFound)
-        throw std::runtime_error("Warning: Employee with ID " + std::to_string(ID) + " was not found\n\n");
-
-    while (it != m_employees.end())
-    {
+    if (!employeeFound)  {
+        std::cout << "Warning: Employee with ID " << ID << " was not found\n\n";
+        return;
+    }
+    for (; it != m_employees.end(); ++it)  {
         it->SetID(it->GetID() - 1);
-        it++;
     }
 }
 
-void Hotel::DeleteRoom(const int& roomNumber)
+
+void Hotel::DeleteRoom(int roomNumber)
 {
     if (m_rooms.empty())
         throw std::runtime_error("Hotel" + m_name + "doesn't have rooms yet.\n");
@@ -103,7 +96,7 @@ void Hotel::DeleteRoom(const int& roomNumber)
     }
 }
 
-void Hotel::MakeRoomDirty(const int& roomNumber)
+void Hotel::MakeRoomDirty(int roomNumber)
 {
     for (auto& room : m_rooms)
     {
@@ -113,65 +106,24 @@ void Hotel::MakeRoomDirty(const int& roomNumber)
             return;
         }
     }
-    throw std::runtime_error("Warning: Room " + std::to_string(roomNumber) + " doesn't exist.\n\n");
+    std::cout << "This room doesn't exist\n";
 }
 
-void Hotel::DisplayRoomInfo() const
+void Hotel::UpdateRoomAvailability(int roomNumber, bool isAvailable)
 {
-    std::cout << "\n";
-    std::cout << "=============================================\n";
-    std::cout << "               HOTEL OVERVIEW                \n";
-    std::cout << "=============================================\n\n";
-
-    std::cout << "------------- [ ROOM INFORMATION ] ------------\n\n";
-
-    if (m_rooms.empty())
+    for (auto& room : m_rooms)
     {
-        std::cout << "No rooms available.\n\n";
-    }
-    else
-    {
-        for (const auto& room : m_rooms)
+        if (room.GetRoomNumber() == roomNumber)
         {
-            std::cout << "Room Number:     #" << room.GetRoomNumber() << "\n"
-                << "VIP Status:      " << (room.GetIsVIP() ? "VIP" : "NOT VIP") << "\n"
-                << "Clean Status:    " << (room.GetIsClean() ? "Clean" : "Needs Cleaning") << "\n"
-                << "Number of Beds:  " << room.GetNumberOfBeds() << "\n"
-                << "Price per Night: $" << room.GetPricePerNight() << "\n"
-                << "Available:       " << (room.GetIsAvailable() ? "Available" : "NOT Available") << "\n"
-                << "-----------------------------------------------\n\n";
+            room.SetIsAvailble(isAvailable);
+            return;
         }
     }
-
-    std::cout << "=============================================\n";
-    std::cout << "            END OF HOTEL OVERVIEW             \n";
-    std::cout << "=============================================\n\n";
 }
 
-void Hotel::DisplayEmployeeInfo() const
+void Hotel::DisplayRestaurantInfo() const
 {
-    std::cout << "=============================================\n\n";
-    std::cout << "----------- [ EMPLOYEE INFORMATION ] -----------\n\n";
-
-    if (m_employees.empty())
-    {
-        std::cout << "No employees registered.\n\n";
-    }
-    else
-    {
-        for (const auto& employee : m_employees)
-        {
-            std::cout << "Employee ID:     #" << employee.GetID() << "\n"
-                << "Name:            " << employee.GetFirstName() << " " << employee.GetSecondName() << "\n"
-                << "Salary:          $" << employee.GetSalary() << "\n"
-                << "Position:        " << employee.GetPosition() << "\n"
-                << "-----------------------------------------------\n\n";
-        }
-    }
-
-    std::cout << "=============================================\n";
-    std::cout << "            END OF HOTEL OVERVIEW             \n";
-    std::cout << "=============================================\n\n";
+    m_restaurant->DisplayRestaurantInfo();
 }
 
 

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Human.h"
 
 class Employee : public Human
@@ -10,14 +11,14 @@ protected:
 	static int m_bufferID;
 
 public:
-	Employee(const std::string& firstName, const std::string& secondName, const float& salary, 
+	Employee(const std::string& firstName, const std::string& secondName, float salary, 
 		const std::string& position);
 
 	int GetID() const;
 	float GetSalary() const;
 	std::string GetPosition() const;
 
-	void SetID(const int& ID);
+	void SetID(int ID);
 
 	~Employee();
 };

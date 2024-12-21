@@ -11,7 +11,7 @@ float Room::CalculatePricePerNight()
     return float(20 * m_numberOfBeds + 30);
 }
 
-Room::Room(const int& numberOfBeds, const bool& isVIP)
+Room::Room(int numberOfBeds, bool isVIP)
     :m_roomNumber(m_roomNumberBuffer++), m_numberOfBeds(numberOfBeds), m_isVIP(isVIP), m_isClean(true),
     m_isAvailable(true)
 {  
@@ -52,19 +52,24 @@ bool Room::GetIsAvailable() const
     return m_isAvailable;
 }
 
-void Room::SetIsClean(const bool& isClean)
+void Room::SetIsClean(bool isClean)
 {
     m_isClean = isClean;
 }
 
-void Room::SetIsAvailble(const bool& isAvailable)
+void Room::SetIsAvailble(bool isAvailable)
 {
     m_isAvailable = isAvailable;
 }
 
-void Room::SetRoomNumber(const int& roomNumber)
+void Room::SetRoomNumber(int roomNumber)
 {
     m_roomNumber = roomNumber;
+}
+
+void Room::ResetRoomNumberBuffer()
+{
+    m_roomNumberBuffer = 1;
 }
 
 Room::~Room()

@@ -1,13 +1,11 @@
 #pragma once
-#include "Human.h"
+
 #include "Room.h"
 #include <vector>
 #include "Employee.h"
 #include <string>
 #include <stdexcept>
-#include "RegistrationBook.h"
-#include "Administrator.h"
-#include "RoomRepository.h"
+#include "Restaurant.h"
 
 class Hotel
 {
@@ -16,26 +14,29 @@ private:
 	std::vector<Employee> m_employees;
 	std::string m_name;
 	int m_numberOfStars;
+	Restaurant* m_restaurant;
+
 
 public:
-	Hotel(const int& numberOfStars, const std::string& name, const std::vector<Room>& rooms = {}, 
+	Hotel(int numberOfStars, const std::string& name, const std::vector<Room>& rooms = {}, 
 		const std::vector<Employee>& employees = {});
 
 	std::string GetName() const;
+	std::vector<Room> GetRooms() const;
+	std::vector<Employee> GetEmployees() const;
 
-	void AddRoom(const Room& room);
-	void AddEmployee(const Employee& employee);
+	void SetRestaurant(Restaurant* restaurant);
 
-	void DeleteEmployee(const int& ID);
-	void DeleteRoom(const int& roomNumber);
+	void AddRoom(int bedNumber, bool isVIP);
+	void AddEmployee(Employee& employee);
 
-	void MakeRoomDirty(const int& roomNumber);
+	void DeleteEmployee(int ID);
+	void DeleteRoom(int roomNumber);
 
-	void DisplayRoomInfo() const;
-	void DisplayEmployeeInfo() const;
+	void MakeRoomDirty(int roomNumber);
 
-	
-	
-	void AddRoom();
+	void UpdateRoomAvailability(int roomNumber, bool isAvailable);
+
+	void DisplayRestaurantInfo() const;
 };
 

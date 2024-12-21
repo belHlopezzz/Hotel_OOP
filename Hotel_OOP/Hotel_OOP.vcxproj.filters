@@ -42,10 +42,25 @@
     <ClCompile Include="Administrator.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="RegistrationBook.cpp">
+    <ClCompile Include="Review.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="RoomRepository.cpp">
+    <ClCompile Include="MenuItem.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Restaurant.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Service.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodOrder.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomCleaning.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,10 +89,25 @@
     <ClInclude Include="Administrator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegistrationBook.h">
+    <ClInclude Include="Review.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RoomRepository.h">
+    <ClInclude Include="MenuItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Restaurant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FoodOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomCleaning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

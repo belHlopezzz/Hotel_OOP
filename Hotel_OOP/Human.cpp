@@ -1,5 +1,4 @@
 #include "Human.h"
-#pragma once
 
 Human::Human(const std::string& firstName, const std::string& secondName)
 	:m_firstName(firstName), m_secondName(secondName) {}
